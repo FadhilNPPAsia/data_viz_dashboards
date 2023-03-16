@@ -1,0 +1,10 @@
+pip install virtualenv
+virtualenv <namaenvironment>
+<namaenvironment>\Scripts\activate
+
+-- Otomatis masuk ke dalam environment
+pip install flask
+pip install flask-mysqldb
+pip install flask-socketio
+pip install flask-login
+pip install python-dotenv

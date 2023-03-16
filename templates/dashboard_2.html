@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}
+{{ title }}
+{% endblock %}
+{% block list_item %}
+<div class="list-item">
+    <a href="{{url_for('dashboard_1_page')}}">
+        <img src="{{url_for('static', filename='chart_icon.png')}}" alt="" class="icon">
+        <span class="description">COVID 19 Dashboard</span>
+    </a>
+</div>
+<div class="list-item">
+    <a href="#">
+        <img src="{{url_for('static', filename='chart_icon.png')}}" alt="" class="icon">
+        <span class="description">CCI Dashboard</span>
+    </a>
+</div>
+{% endblock %}
+{% block dashboard %}
+{{ variable }}
+{% endblock %}
