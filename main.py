@@ -55,16 +55,46 @@ def login():
 @app.route('/home')
 def home():
     if 'loggedin' in session:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT a.id, a.name, COUNT(b.project_id) as total_dashboard FROM projects a INNER JOIN dashboards b ON a.id = b.project_id GROUP BY b.project_id')
+        projects = cursor.fetchall()
+        print(projects)
         if session['username'] != "client":
             global isClient
             isClient = 0
-        return render_template('home.html', isClient = isClient)
+        return render_template('home.html', isClient = isClient, projects = projects)
+    else:
+        return redirect(url_for('login'))
+    
+@app.route('/home/<project_id>', methods=['GET', 'POST'])
+def dashboardlist(project_id):
+    if 'loggedin' in session:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute("SELECT b.id as project_id, a.id, a.name FROM dashboards a INNER JOIN projects b ON a.project_id = b.id WHERE b.id = % s;", (project_id, ))
+        dashboards = cursor.fetchall()
+        print(dashboards)
+        if session['username'] != "client":
+            global isClient
+            isClient = 0
+        return render_template('project.html', isClient = isClient, dashboards = dashboards)
     else:
         return redirect(url_for('login'))
 
-@app.route('/dashboardlist/<projectname>')
-def dashboardlist(projectname):
-    return render_template('')
+@app.route('/home/<project_id>/<dashboard_id>', methods = ['GET', 'POST'])
+def embeddashboard(project_id, dashboard_id):
+    if 'loggedin' in session:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute("SELECT a.id, a.name, a.embed_code FROM dashboards a INNER JOIN projects b ON a.project_id = b.id WHERE b.id = % s AND a.id = % s;", (project_id, dashboard_id, ))
+        dashboard_html = cursor.fetchone()
+        embed_code = Markup(dashboard_html['embed_code'])
+        print(dashboard_html)
+        if session['username'] != "client":
+            global isClient
+            isClient = 0
+        return render_template('dashboard.html', isClient = isClient, embed_code = embed_code)
+    else:
+        return redirect(url_for('login'))
+    
 @app.route('/logout')
 def logout():
    session.pop('loggedin', None)
@@ -77,30 +107,6 @@ def disconnect_user():
    session.pop('loggedin', None)
    session.pop('id', None)
    session.pop('username', None)
-
-@app.route('/dashboard_1')
-def dashboard_1_page():
-    if 'loggedin' in session:
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM dashboards WHERE id = 1')
-        dashboard = cursor.fetchone()
-        title = dashboard['name']
-        embed_code = dashboard['embed_code']
-        embed_code = Markup(embed_code)
-        return render_template('dashboard_1.html', variable = embed_code, title = title)
-    return redirect(url_for('login'))
-
-@app.route('/dashboard_2')
-def dashboard_2_page():
-    if 'loggedin' in session:
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM dashboards WHERE id = 2')
-        dashboard = cursor.fetchone()
-        title = dashboard['name']
-        embed_code = dashboard['embed_code']
-        embed_code = Markup(embed_code)
-        return render_template('dashboard_2.html', variable = embed_code, title = title)
-    return redirect(url_for('login'))
 
 
 

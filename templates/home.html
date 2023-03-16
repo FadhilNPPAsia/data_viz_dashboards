@@ -72,18 +72,14 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for project in projects %}
                         <tr>
-                            <td data-label="id">1</td>
-                            <td data-label="project-name">Project 1</td>
-                            <td data-label="total-dashboard">12</td>
-                            <td data-label="#"><a href="#" class="btn">Dashboards</a></td>
+                            <td data-label="id">{{ project.id }}</td>
+                            <td data-label="project-name">{{ project.name }}</td>
+                            <td data-label="total-dashboard">{{ project.total_dashboard }}</td>
+                            <td data-label="#"><a href="{{url_for('dashboardlist', project_id = project.id )}}" class="btn">Dashboards</a></td>
                         </tr>
-                        <tr>
-                            <td data-label="id">2</td>
-                            <td data-label="project-name">Project 2</td>
-                            <td data-label="total-dashboard">13</td>
-                            <td data-label="#"><a href="#" class="btn">Dashboards</a></td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>

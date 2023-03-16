@@ -65,25 +65,19 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>No</th>
-                            <th>Project Name</th>
-                            <th>Total Dashboard</th>
+                            <th>id</th>
+                            <th>Dashboard Name</th>
                             <th>#</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {% for dashboard in dashboards %}
                         <tr>
-                            <td data-label="id">1</td>
-                            <td data-label="project-name">Project 1</td>
-                            <td data-label="total-dashboard">12</td>
-                            <td data-label="#"><a href="#" class="btn">Dashboards</a></td>
+                            <td data-label="dashboard-id">{{ dashboard.id }}</td>
+                            <td data-label="dashboard-name">{{ dashboard.name }}</td>
+                            <td data-label="#"><a href="#" class="btn">Open Dashboard</a></td>
                         </tr>
-                        <tr>
-                            <td data-label="id">2</td>
-                            <td data-label="project-name">Project 2</td>
-                            <td data-label="total-dashboard">13</td>
-                            <td data-label="#"><a href="#" class="btn">Dashboards</a></td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>

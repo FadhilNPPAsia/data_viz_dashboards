@@ -8,3 +8,52 @@ pip install flask-mysqldb
 pip install flask-socketio
 pip install flask-login
 pip install python-dotenv
+
+-- push to github
+git init
+git add .
+git commit -m "initial commit"
+
+-- kalo pertama kali
+git remote add origin <link github>
+
+
+
+git push origin master
+
+
+
+'''
+@app.route('/home/<project_id>', methods=['GET', 'POST'])
+def dashboardlist(project_id):
+    if 'loggedin' in session:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute("SELECT b.id as project_id, a.id, a.name FROM dashboards a INNER JOIN projects b ON a.project_id = b.id WHERE b.id = % s;", (project_id, ))
+        dashboards = cursor.fetchall()
+        print(dashboards)
+        if session['username'] != "client":
+            global isClient
+            isClient = 0
+        return render_template('project.html', isClient = isClient, dashboards = dashboards)
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/home/<project_id>/<dashboard_id>', methods = ['GET', 'POST'])
+def embeddashboard(project_id, dashboard_id):
+    if 'loggedin' in session:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute("SELECT a.id, a.name, a.embed_code FROM dashboards a INNER JOIN projects b ON a.project_id = b.id WHERE b.id = % s AND a.id = % s;", (project_id, dashboard_id, ))
+        dashboard_html = cursor.fetchone()
+        embed_code = Markup(dashboard_html['embed_code'])
+        print(dashboard_html)
+        if session['username'] != "client":
+            global isClient
+            isClient = 0
+        return render_template('dashboard.html', isClient = isClient, embed_code = embed_code)
+    else:
+        return redirect(url_for('login'))
+'''
+
+                            <!---->
+
+                            {{url_for('embeddashboard', dashboard_id = dashboard.id)}}
