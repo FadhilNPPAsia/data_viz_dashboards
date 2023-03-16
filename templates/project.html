@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>
-            Da Viz - Home
+            Da Viz - Dashboard List
         </title>
         <link rel="stylesheet" href="{{url_for('static', filename='css/home_style.css')}}">
     </head>
@@ -61,7 +61,7 @@
             </script>
             
             <div class="table-container">
-                <h1 class="heading">Project List</h1>
+                <h1 class="heading">Dashboard List</h1>
                 <table class="table">
                     <thead>
                         <tr>
@@ -75,7 +75,7 @@
                         <tr>
                             <td data-label="dashboard-id">{{ dashboard.id }}</td>
                             <td data-label="dashboard-name">{{ dashboard.name }}</td>
-                            <td data-label="#"><a href="#" class="btn">Open Dashboard</a></td>
+                            <td data-label="#"><a href="{{url_for('embeddashboard', project_id = dashboard.project_id, dashboard_id = dashboard.id)}}" class="btn">Open Dashboard</a></td>
                         </tr>
                         {% endfor %}
                     </tbody>
