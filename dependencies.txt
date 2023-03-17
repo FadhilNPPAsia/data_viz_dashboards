@@ -57,3 +57,7 @@ def embeddashboard(project_id, dashboard_id):
                             <!---->
 
                             {{url_for('embeddashboard', dashboard_id = dashboard.id)}}
+
+
+
+position: fixed; left: 100px; align-items: center;

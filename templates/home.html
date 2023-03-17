@@ -26,7 +26,7 @@
                 <div class="main">
                     {% if not isClient %}
                         <div class="list-item">
-                            <a href="#">
+                            <a href="{{url_for('add_dashboard')}}">
                                 <img src="{{url_for('static', filename='note_icon.png')}}" alt="" class="icon" style="width:30px; height:30px;">
                                 <span class="description">Add new Dashboard</span>
                             </a>

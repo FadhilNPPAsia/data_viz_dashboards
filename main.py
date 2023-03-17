@@ -46,7 +46,7 @@ def login():
                 else:
                     isClient = 0
                 print("isClient = " + str(isClient))
-                return render_template('home.html', isClient = isClient)
+                return redirect(url_for('home'))
             else:
                 msg = 'Incorrect username / password !'
                 print(msg)
@@ -65,7 +65,19 @@ def home():
         return render_template('home.html', isClient = isClient, projects = projects)
     else:
         return redirect(url_for('login'))
-    
+
+@app.route('/add_dashboard', methods=['GET', 'POST'])
+def add_dashboard():
+    if request.method == 'POST' and 'project_id' in request.form and 'dashboard_name' in request.form and 'embed_code' in request.form:
+        project_id = request.form['project_id']
+        project_id = int(project_id)
+        dashboard_name = request.form['dashboard_name']
+        embed_code = request.form['embed_code']
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('INSERT INTO dashboards VALUES (NULL, %s, %s, %s)', (dashboard_name, embed_code, project_id))
+        mysql.connection.commit()
+    return render_template('input_dashboard.html')
+
 @app.route('/home/<project_id>', methods=['GET', 'POST'])
 def dashboardlist(project_id):
     if 'loggedin' in session:

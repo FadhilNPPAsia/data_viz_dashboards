@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Add Dashboard Embed Code</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/adddashboard_style.css')}}">
+    </head>
+    <body>
+        <div class="container">
+            <div class="sidebar">
+                <div class="header">
+                    <div class="list-item">
+                        <div class="tableau-logo">
+                            <a href="#">
+                                <img src="{{url_for('static', filename='tableau_logo.png')}}" alt="" class="icon" width = "35" height = "35">
+                            </a>
+                        </div>
+                        <div class="tableau-tulisan">
+                            <a href="#">
+                                <img src="{{url_for('static', filename='tableau_tulisan.png')}}" alt="" class="icon" width = "140" height = "35">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="main">
+                        <div class="list-item">
+                            <a href="{{url_for('home')}}">
+                                <img src="{{url_for('static', filename='home_icon.png')}}" alt="" class="icon" style="width:35px; height:30px;">
+                                <span class="description">Home</span>
+                            </a>
+                        </div>
+                    <div class="list-item">
+                        <a href="{{url_for('logout')}}">
+                            <img src="{{url_for('static', filename='logout_icon.png')}}" alt="" class="icon" style="width:30px; height:30px;">
+                            <span class="description">Logout</span>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="main-content">
+                <div id="menu-button">
+                    <input type="checkbox" id="menu-checkbox">
+                    <label for="menu-checkbox" id="menu-label">
+                        <div id="hamburger">
+
+                        </div>
+                    </label>
+                </div> 
+            </div>
+            <script>
+                const menu = document.getElementById('menu-label');
+                const sidebar = document.getElementsByClassName('sidebar')[0];
+
+                menu.addEventListener('click', function() {
+                    sidebar.classList.toggle('hide');
+                });
+            </script>
+                <div class="wrapper">
+                    <div class="title">
+                        Dashboard data input
+                    </div>
+                    <form action="{{url_for('add_dashboard')}}" method="post" autocomplete="off">
+                        <div class="form">
+                            <div class="input_field">
+                                <label>Project Id</label>
+                                <!--<div class="custom_select">
+                                    <select name="project_name">
+                                        <option value="">Select</option>
+                                        {% for name_itr in project_name %}
+                                            <option>{{ name_itr.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>-->
+                                <input type="text" name= "project_id" class="input" placeholder="Enter your project id" id="project_id">
+                            </div>
+                            <div class="input_field">
+                                <label>Dashboard Name</label>
+                                <input type="text" name= "dashboard_name" class="input" placeholder="Enter your dashboard name" id="dashboard_name">
+                            </div>
+                            <div class="input_field">
+                                <label>Embed Code</label>
+                                <textarea name="embed_code" class="textarea" placeholder="Enter your embed code" id="embed_code"></textarea>
+                            </div>
+                            <div class="input_field">
+                                <input type="submit" value="" class="btn">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+        </div>
+    </body>
+</html>
